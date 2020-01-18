@@ -12,6 +12,7 @@ server.on('connection', (sock) => {
 
     console.log('CONNECTED: ' + sock.remoteAddress + ':' + sock.remotePort);
 
+    //Check event data
     sock.on('data', (data) => {
         console.log('From Client IP is ==>' + sock.remoteAddress + ':' + sock.remotePort + " \nDATA is ==>" + data + "\n");
 
@@ -21,24 +22,24 @@ server.on('connection', (sock) => {
         }
 
         //Check Number and length
-        if(data.toString() !== answer.toString() && data.length <= 2 ){
+        if (data.toString() !== answer.toString() && data.length <= 2) {
             sock.write('WRONG');
         }
 
         //Check Number Eq
-        if (data.toString() === answer.toString()){
+        if (data.toString() === answer.toString()) {
             sock.write('BINGO');
             sock.destroy()
         }
 
         //Check Wrong username or Number 1 or 2 length
-        if(data.length < 10 && data.length !== 2 && data.length !== 1){
+        if (data.length < 10 && data.length !== 2 && data.length !== 1) {
             sock.write('WRONG username')
             sock.destroy();
         }
 
         //Set Count Until 5
-        if(countForDisconnect===5){
+        if (countForDisconnect === 5) {
             sock.destroy()
             countForDisconnect = 0;
         }
